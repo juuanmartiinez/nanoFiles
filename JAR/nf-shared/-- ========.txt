@@ -1,0 +1,52 @@
+-- =========================================================
+-- 8) ATENCION (antes ATIENDE en el ELS)
+-- ATENCION(especialidad_id, codigo_clinica)
+-- PK: (especialidad_id, codigo_clinica)
+-- =========================================================
+
+CREATE TABLE ATENCION (
+
+  especialidad_id CHAR(4) NOT NULL,
+  codigo_clinica  CHAR(4) NOT NULL,
+
+  CONSTRAINT ate_pk PRIMARY KEY (especialidad_id, codigo_clinica),
+
+  CONSTRAINT ate_fk_especialidad
+    FOREIGN KEY (especialidad_id)
+    REFERENCES ESPECIALIDAD (especialidad_id)
+    -- ON DELETE NO ACTION / CASCADE / SET NULL
+  ,
+
+  CONSTRAINT ate_fk_clinica
+    FOREIGN KEY (codigo_clinica)
+    REFERENCES CLINICA (codigo)
+    -- ON DELETE NO ACTION / CASCADE / SET NULL
+);
+
+-- =========================================================
+-- 9) CERTIFICADO
+-- CERTIFICADO(certificado_id, fecha, descripcion, medico_id, paciente_id)
+-- PK: certificado_id
+-- =========================================================
+
+CREATE TABLE CERTIFICADO (
+
+  certificado_id CHAR(4)      NOT NULL,
+  fecha          DATE         NOT NULL,
+  descripcion    VARCHAR2(50) NOT NULL,
+  medico_id      CHAR(4)      NOT NULL,
+  paciente_id    CHAR(4)      NOT NULL,
+
+  CONSTRAINT cer_pk PRIMARY KEY (certificado_id),
+
+  CONSTRAINT cer_fk_medico
+    FOREIGN KEY (medico_id)
+    REFERENCES MEDICO (medico_id)
+    -- ON DELETE NO ACTION / CASCADE / SET NULL
+  ,
+
+  CONSTRAINT cer_fk_paciente
+    FOREIGN KEY (paciente_id)
+    REFERENCES PACIENTE (paciente_id)
+    -- ON DELETE NO ACTION / CASCADE / SET NULL
+);
